@@ -1,0 +1,57 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ספריית השיעורים של Kita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf8f3;--ink:#2b2a33;--mut:#6c6a78;--pri:#5b5bd6;--card:#fff;--line:#ece7df}
+*{box-sizing:border-box}body{margin:0;font-family:Rubik,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#7c7cf0,#b38cf2 55%,#f5a8c2);color:#fff;padding:32px 18px 64px;text-align:center}
+header h1{margin:0 0 6px;font-size:clamp(26px,6vw,40px)}header p{margin:0;opacity:.95;font-size:16px}
+.banner{background:#fff3c4;color:#6b5200;text-align:center;padding:8px;font-weight:500}
+main{max-width:1100px;margin:-40px auto 40px;padding:0 14px}
+.panel{background:#fff;border-radius:18px;box-shadow:0 8px 28px #2b2a3314;padding:14px;display:grid;gap:10px}
+input,select{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;width:100%}
+input:focus,select:focus{outline:none;border-color:var(--pri)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:760px){.panel{grid-template-columns:2fr 1fr 1fr}.row{display:contents}}
+.count{color:var(--mut);margin:16px 4px 8px;font-size:14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px #2b2a3314}
+.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{font-size:12px;padding:3px 9px;border-radius:99px;background:#efeefe;color:#4343b0}
+.tag.t{background:#ffe9f0;color:#a2335c}.tag.g{background:#e6f6ee;color:#1f7a4c}
+.card h3{margin:2px 0;font-size:18px}.card p{margin:0;color:var(--mut);font-size:14px;line-height:1.5;flex:1}
+.by{font-size:13px;color:var(--mut)}
+.btn{display:inline-block;text-align:center;text-decoration:none;font-weight:500;padding:11px 14px;border-radius:12px}
+.use{background:var(--pri);color:#fff}.use:hover{background:#4848c0}
+.empty{background:#fff;border-radius:18px;padding:40px 20px;text-align:center;border:2px dashed var(--line)}
+.empty .e{font-size:54px}.empty h2{margin:8px 0}.empty p{color:var(--mut);max-width:460px;margin:0 auto 6px;line-height:1.6}
+.cta{margin:28px 0;background:linear-gradient(135deg,#fff,#f3efff);border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center}
+.cta h2{margin:0 0 6px;font-size:20px}.cta p{margin:0 0 14px;color:var(--mut)}
+.write{background:#f58fb0;color:#fff}.write:hover{background:#e7769c}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:20px}
+</style></head><body>
+
+<header><h1>📚 ספריית השיעורים של Kita</h1><p>שיעורים, מצגות ומשחקים שמורות בנו ושיתפו. אפשר לחפש, להשתמש ולהשראה.</p></header>
+<main>
+<div class="panel"><input id="q" type="search" placeholder="🔍 חיפוש לפי נושא, מקצוע או מילה…" aria-label="חיפוש">
+<div class="row"><select id="s" aria-label="מקצוע"><option value="">כל המקצועות</option></select>
+<select id="g" aria-label="כיתה"><option value="">כל הכיתות</option></select></div></div>
+<div class="count" id="count"></div><div class="grid" id="grid"></div>
+<div class="cta"><h2>רוצה שיעור כזה לכיתה שלך?</h2><p>כתבי לנו מה את צריכה, ונבנה לך שיעור מותאם.</p>
+<a class="btn write" href="mailto:kita.lessons@gmail.com?subject=%D7%91%D7%A7%D7%A9%D7%94%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8%20%D7%9E%D7%94%D7%A1%D7%A4%D7%A8%D7%99%D7%99%D7%94">✉️ רוצה כזה? כתבי לנו</a></div>
+</main><footer>Kita · כל השיעורים מתפרסמים רק באישור המורה שיצרה אותם</footer>
+<script>
+const L=[];const T={presentation:"מצגת",game:"משחק",site:"אתר"};
+const GO=["א׳","ב׳","ג׳","ד׳","ה׳","ו׳","ז׳","ח׳","ט׳","י׳","י״א","י״ב","כללי"];
+const $=i=>document.getElementById(i),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+[...new Set(L.map(l=>l.subject))].sort().forEach(v=>$("s").add(new Option(v,v)));
+[...new Set(L.map(l=>l.grade))].sort((a,b)=>GO.indexOf(a)-GO.indexOf(b)).forEach(v=>$("g").add(new Option(v==="כללי"?v:"כיתה "+v,v)));
+function mail(l){return "mailto:kita.lessons@gmail.com?subject="+encodeURIComponent("רוצה שיעור כמו: "+l.title)}
+function draw(){const q=$("q").value.trim().toLowerCase(),s=$("s").value,g=$("g").value;
+const r=L.filter(l=>(!s||l.subject===s)&&(!g||l.grade===g)&&(!q||[l.title,l.subject,l.description,l.grade,T[l.type]].join(" ").toLowerCase().includes(q)));
+$("count").textContent=L.length?r.length+" שיעורים":"";
+if(!L.length){$("grid").innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">🌱</div><h2>הספרייה רק מתחילה לצמוח</h2><p>בקרוב יופיעו כאן שיעורים ראשונים שמורות בנו ושיתפו באישורן.</p><p>בינתיים אפשר לבקש שיעור משלך.</p></div>';return}
+if(!r.length){$("grid").innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">🔎</div><h2>לא מצאנו שיעור כזה</h2><p>נסי מילה אחרת, או כתבי לנו ונבנה אותו בשבילך.</p></div>';return}
+$("grid").innerHTML=r.map(l=>`<article class="card"><div class="tags"><span class="tag">${esc(l.subject)}</span><span class="tag g">${l.grade==="כללי"?"כללי":"כיתה "+esc(l.grade)}</span><span class="tag t">${T[l.type]||esc(l.type)}</span></div><h3>${esc(l.title)}</h3><p>${esc(l.description)}</p><div class="by">נוצר ע״י ${esc(l.creator_name)}</div><a class="btn use" href="${esc(l.link)}" target="_blank" rel="noopener">להשתמש בשיעור ←</a><a class="by" href="${mail(l)}">רוצה כזה? כתבי לנו</a></article>`).join("")}
+["q","s","g"].forEach(i=>$(i).addEventListener("input",draw));draw();
+</script></body></html>
